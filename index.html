@@ -31,25 +31,9 @@
         .slider-card {
             scroll-snap-align: start;
         }
-        .bg-container {
-            position: relative;
-            width: 100vw; /* Full viewport width */
-            height: 100vh; /* Full viewport height */
-            display: flex;
-            align-items: center; /* Center items vertically */
-            justify-content: center; /* Center items horizontally */
-            overflow: hidden; /* Ensure nothing overflows */
-        }
+        
 
-        .bg-container img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            object-fit: cover; /* Ensures the image covers the div without distortion */
-            transform: translate(-50%, -50%); /* Centers the image */
-            z-index: -1; /* Places the image behind the content */
-        }
-
+       
         
     </style>
     <script>
@@ -241,20 +225,18 @@
 
         <!--FAQ-->
         <!--phone view-->
-        <div class="container mx-auto px-4 py-8">
-            <div class="relative w-full h-[900px] overflow-hidden">
-                <div id="slider1" class="flex transition-transform duration-300 ease-in-out">
-                    <img src="assests\img\28 (1).png" alt="FAQ Questions" class="w-full h-[800px] object-cover">
-                    <img src="assests\img\Pop Up MOBILE VIEW DIABETECURE.png" alt="FAQ Answers" class="w-full h-[800px] object-cover">
-                </div>
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
-                    <button id="prevBtn1" class="bg-blue-500 text-white px-4 py-2 rounded-full focus:outline-none">
-                        Previous
-                    </button>
-                    <button id="nextBtn1" class="bg-blue-500 text-white px-4 py-2 rounded-full focus:outline-none">
-                        Next
-                    </button>
-                </div>
+        <div class="relative w-full h-[800px] overflow-hidden pl-8">
+            <div id="slider1" class="flex transition-transform duration-300 ease-in-out">
+                <img src="assests\img\28 (1).png" alt="FAQ Questions" class="w-full h-[700px] object-cover">
+                <img src="assests\img\Pop Up MOBILE VIEW DIABETECURE.png" alt="FAQ Answers" class="w-full h-[700px] object-cover">
+            </div>
+            <div class="flex justify-center space-x-4">
+                <button id="prevBtn1" class="text-white  absolute left-7 top-[320px] md:absolute md:left-[220px] md:top-[220px] md:text-5xl md:bg-white md:text-black md:bg-white">
+                    <img src="assests\img\left.png" class="block h-10 md:h-20 ">
+                </button>
+                <button id="nextBtn1" class="text-white absolute right-7 top-[320px] md:absolute md:right-[220px] md:top-[220px] md:bg-white">
+                    <img src="assests\img\right.png" alt="" class="block h-10 md:h-20">
+                </button>
             </div>
         </div>
         <!--Desktop-->
@@ -668,61 +650,62 @@
                 }
             }
         };
+    </script>
+    <script>
+         // FAQ slider
+         const faqSlider = document.getElementById('slider1');
+        const faqPrevBtn = document.getElementById('prevBtn1');
+        const faqNextBtn = document.getElementById('nextBtn1');
+        let isFaqShowingQuestions = true;
 
-        //faq slider
-        const slider1 = document.getElementById('slider1');
-        const prevBtn1 = document.getElementById('prevBtn1');
-        const nextBtn1 = document.getElementById('nextBtn1');
-        let isShowingQuestions = true;
-
-        function showQuestions() {
-            slider1.style.transform = 'translateX(0)';
-            isShowingQuestions = true;
+        function showFaqQuestions() {
+            faqSlider.style.transform = 'translateX(0)';
+            isFaqShowingQuestions = true;
         }
 
-        function showAnswers() {
-            slider1.style.transform = 'translateX(-100%)';
-            isShowingQuestions = false;
+        function showFaqAnswers() {
+            faqSlider.style.transform = 'translateX(-100%)';
+            isFaqShowingQuestions = false;
         }
 
-        prevBtn1.addEventListener('click', () => {
-            if (!isShowingQuestions) {
-                showQuestions();
+        faqPrevBtn.addEventListener('click', () => {
+            if (!isFaqShowingQuestions) {
+                showFaqQuestions();
             }
         });
 
-        nextBtn1.addEventListener('click', () => {
-            if (isShowingQuestions) {
-                showAnswers();
+        faqNextBtn.addEventListener('click', () => {
+            if (isFaqShowingQuestions) {
+                showFaqAnswers();
             }
         });
 
-        // Enable touch sliding
-        let startX1;
-        let isDragging1 = false;
+        // Enable touch sliding for FAQ
+        let faqStartX;
+        let isFaqDragging = false;
 
-        slider1.addEventListener('touchstart', (e) => {
-            startX1 = e.touches[0].clientX;
-            isDragging1 = true;
+        faqSlider.addEventListener('touchstart', (e) => {
+            faqStartX = e.touches[0].clientX;
+            isFaqDragging = true;
         });
 
-        slider1.addEventListener('touchmove', (e) => {
-            if (!isDragging1) return;
+        faqSlider.addEventListener('touchmove', (e) => {
+            if (!isFaqDragging) return;
             const currentX = e.touches[0].clientX;
-            const diff = startX1 - currentX;
+            const diff = faqStartX - currentX;
             
             if (Math.abs(diff) > 50) {
-                if (diff > 0 && isShowingQuestions) {
-                    showAnswers();
-                } else if (diff < 0 && !isShowingQuestions) {
-                    showQuestions();
+                if (diff > 0 && isFaqShowingQuestions) {
+                    showFaqAnswers();
+                } else if (diff < 0 && !isFaqShowingQuestions) {
+                    showFaqQuestions();
                 }
-                isDragging1 = false;
+                isFaqDragging = false;
             }
         });
 
-        slider1.addEventListener('touchend', () => {
-            isDragging1 = false;
+        faqSlider.addEventListener('touchend', () => {
+            isFaqDragging = false;
         });
     </script>
 
